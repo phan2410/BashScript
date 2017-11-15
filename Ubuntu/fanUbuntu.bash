@@ -89,6 +89,10 @@ sudo apt-get install default-jre vlc browser-plugin-vlc gimp gimp-data gimp-plug
 sudo tlp start
 redshift-gtk &
 
+sudo add-apt-repository ppa:noobslab/apps &&
+sudo apt-get update &&
+sudo apt-get install xdman-downloader
+
 mkdir -p ~/Downloads
 cd ~/Downloads
 
