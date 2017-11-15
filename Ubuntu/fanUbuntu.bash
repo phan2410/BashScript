@@ -68,7 +68,7 @@ gsettings set com.canonical.Unity.Launcher launcher-position Bottom
 
 # Creates fanCleanUp
 echo "#!/bin/bash" > ~/fanCleanUp.bash
-echo "printf \"Cleaning Up\" &&" >> ~/fanCleanUp.bash
+echo "echo \"Cleaning Up\" &&" >> ~/fanCleanUp.bash
 echo "sudo apt-get -f install &&" >> ~/fanCleanUp.bash
 echo "sudo apt-get autoremove &&" >> ~/fanCleanUp.bash
 echo "sudo apt-get -y autoclean &&" >> ~/fanCleanUp.bash
@@ -98,7 +98,8 @@ sudo apt-get update &&
 sudo apt-get install google-chrome-stable
 
 sudo apt-get update &&
-sudo apt-get install ibus-unikey samba &&
+sudo apt-get install ibus-unikey samba emacs &&
+echo "alias emacs=\"emacs -nw\"" >> ~/.bashrc
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.backup
 echo "[share]" | sudo tee -a /etc/samba/smb.conf
 echo "comment = Ubuntu File Server Share" | sudo tee -a /etc/samba/smb.conf
