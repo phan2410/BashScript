@@ -101,9 +101,17 @@ echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sud
 sudo apt-get update &&
 sudo apt-get install google-chrome-stable
 
+
 sudo apt-get update &&
 sudo apt-get install ibus-unikey samba emacs &&
 echo "alias emacs=\"emacs -nw\"" >> ~/.bashrc
+cd ~/Downloads && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+~/Downloads/.dropbox-dist/dropboxd &
+# Here somehow I must automatically mount driver to not double space of sync folder version in windows
+sudo apt-get install nautilus-dropbox &&
+printf "now we are going to optional sync folder ...."
+
+
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.backup
 echo "[share]" | sudo tee -a /etc/samba/smb.conf
 echo "comment = Ubuntu File Server Share" | sudo tee -a /etc/samba/smb.conf
