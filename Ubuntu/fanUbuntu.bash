@@ -66,6 +66,11 @@ printf "\n"
 gsettings set org.compiz.unityshell:/org/compiz/profiles/unity/plugins/unityshell/ launcher-minimize-window true
 gsettings set com.canonical.Unity.Launcher launcher-position Bottom
 
+# Going to automatically mount a drive
+sudo cp /etc/fstab /etc/fstab.backup
+# See more at https://askubuntu.com/questions/164926/how-to-make-partitions-mount-at-startup
+sudo blkid ...
+
 # Creates fanCleanUp
 echo "#!/bin/bash" > ~/fanCleanUp.bash
 echo "echo \"Cleaning Up\" &&" >> ~/fanCleanUp.bash
