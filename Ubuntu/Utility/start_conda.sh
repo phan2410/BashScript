@@ -1,10 +1,6 @@
 #!/bin/bash
 
-exec_command=$(basename -- "$0")
-if [ "$exec_command" != "source" ]; then
-    printf "Please run:\n\tsource $0\n" >&2
-    exit 1
-fi
+# Please $ source <this_file>
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
