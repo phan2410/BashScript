@@ -129,6 +129,7 @@ sudo apt install gnome-startup-applications # to install it
 # 2. sudo gedit /etc/default/grub, edit: GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=xxx"
 # 3. sudo update-grub
 # 4. test it: xdg-screensaver lock && sudo systemctl hibernate
+# 5. if ok, then make hibernate option appear at gnome power menu.
 
 # PREPARE UTILS SCRIPT
 # Creates fanCleanUp -> check the script in the repo
