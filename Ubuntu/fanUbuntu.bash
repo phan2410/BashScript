@@ -30,6 +30,23 @@ select yn in "Yes" "No"; do
 done
 printf "\n"
 
+# FIX THE GRUB-BOOT MENU:
+# Must have one and only one ESP/EFI partition before running boot-repair
+# Make sure the following things are configured in /etc/default/grub
+GRUB_DEFAULT="Ubuntu"       # default =0, but I specify it out to make it clearer
+GRUB_TIMEOUT_STYLE=hidden   # default =menu, but I want to hide it
+GRUB_TIMEOUT=0              # don't want to wait
+GRUB_RECORDFAIL_TIMEOUT=0   # must have var, don't know why
+# Make sure set these vars in /etc/grub.d/30_os-prober
+quick_boot="0" # this prevents grub-timeout overridding
+# doing this will help bypass the grub menu at boot time 
+# cause bluetooth keyboard doesnot work at this point anyway,
+# so to boot into windows 10, once we login ubuntu, we can use this command
+sudo grub-reboot "Windows 10 (on /dev/sda1)"   # this will only affect the next boot once
+# or sudo grub-reboot 2 (option number in 30_os-prober), and then restart, you will see it automatically boots to windows
+# remember: don't set GRUB_DISABLE_OS_PROBER=true, otherwise, we can never boot to any OS except ubuntu
+
+
 # Update manually
 printf "UPDATE MANUALLY=========================================================\n"
 printf "\n"
@@ -62,11 +79,9 @@ printf "\n"
 printf "SETTING UP==============================================================\n"
 printf "\n"
 
-# CHANGE NEED: SHOULD SEPARATE THOSE SETTINGS FOR CURRENT USER, NOT RUN WITH SUDO PRIVILEGE
-gsettings set org.compiz.unityshell:/org/compiz/profiles/unity/plugins/unityshell/ launcher-minimize-window true
-gsettings set com.canonical.Unity.Launcher launcher-position Bottom
+# CHANGE APPEARANCE: Settings > Appearance > Theme
 
-# Going to automatically mount a drive
+# DRIVE MOUNT AT STARTUP: automatically mount a drive
 sudo cp /etc/fstab /etc/fstab.backup
 # See more at https://askubuntu.com/questions/164926/how-to-make-partitions-mount-at-startup
 sudo blkid ...
@@ -80,43 +95,44 @@ echo "sudo apt-get -y autoclean &&" >> ~/fanCleanUp.bash
 echo "sudo apt-get -y clean" >> ~/fanCleanUp.bash
 chmod +x ~/fanCleanUp.bash
 
-sudo apt-get update &&        # Fetches the list of available updates
-sudo apt-get remove yelp thunderbird rhythmbox eog && 	# Remove unnecessary packages
-sudo apt-get upgrade &&       # Strictly upgrades the current packages
-sudo apt-get dist-upgrade     # Installs updates (new ones)
-
-sudo apt-get install ubuntu-restricted-extras flashplugin-installer git openssh-server openssh-client libgnome-keyring-dev &&
-sudo make --directory=/usr/share/doc/git/contrib/credential/gnome-keyring &&
-git config --global credential.helper /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
-
-sudo apt-get update
-sudo apt-get install default-jre vlc browser-plugin-vlc gimp gimp-data gimp-plugin-registry gimp-data-extras bleachbit tlp tlp-rdw redshift redshift-gtk &&
-sudo tlp start
-redshift-gtk &
-
-sudo add-apt-repository ppa:noobslab/apps &&
-sudo apt-get update &&
-sudo apt-get install xdman-downloader
-
-mkdir -p ~/Downloads
-cd ~/Downloads
-
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - &&
-echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list &&
-sudo apt-get update &&
-sudo apt-get install google-chrome-stable
+# INSTALL VIRTUALBOX
+# MOUNT PHYSICAL WINDOWS 10:
+# First must add user to disk group
+sudo usermod -aG disk $USER
+# and logout/login (best is to restart the computer)
+# Then make some disk images
+sudo VBoxManage createmedium disk --filename "/home/fan/.virtualbox/real_win10.vmdk" --variant=RawDisk --format=VMDK --property RawDrive=/dev/sda
+sudo VBoxManage createmedium disk --filename "/home/fan/.virtualbox/real_d.vmdk" --variant=RawDisk --format=VMDK --property RawDrive=/dev/sdb
+# Then create windows 10 VM and attach these storages
 
 
-sudo apt-get update &&
-sudo apt-get install ibus-unikey samba emacs &&
-echo "alias emacs=\"emacs -nw\"" >> ~/.bashrc
+printf "Please manually install: google-chrome, ibus-unikey, dropbox, pycharm, redshift, ksnip, cloudflare-wrap, anki"
 
-printf "Now we are going to manuall install dropbox"
-# Here somehow I must automatically mount driver to not double space of sync folder version in windows
+#INSTALL GNOME EXTENSION MANAGER
+sudo apt-get install gnome-shell-extension-manager
+# LIST OF BEST EXTENSIONS
+Auto Move Windows # to configure the workspace where an app will be opened
+Clipboard Indicator # to save/retrieve old clipboard values
+Dash to Panel # to make a windows-like taskbar
+gTile # to help arrange multiple windows on one screen
+Improved Workspace Indicator # to show the current workspace number in taskbar
+Notes # sticky notes
+OpenWeather # to see weather
+Sensory Perception # to watch for temperature of cpus/disks
+Wallpaper Switcher # To switch desktop background. Please point to /d/DesktopWallpaper
 
-printf "now we are going to optional sync folder ...."
+# CONFIG StartUp App
+sudo apt install gnome-startup-applications # to install it
+# Config CloudFlare Warp Stray icon: 
+# 1. disable the original task bar icon from Cloudflare
+# 2. cd /opt && sudo git clone https://github.com/mrmoein/warp-cloudflare-gui
+# 3. cd warp-cloudflare-gui && pip3 install -r requirements.txt
+# 3. open StartUp software, and add an item, give name and give command: 
+#    bash --login -c 'export PATH="$PATH:$HOME/.local/bin";python3 /opt/warp-cloudflare-gui/main.py --hide;disown -r;exit 0'
+# then save
 
 
+#IN CASE NEED to config SAMBA
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.backup
 echo "[share]" | sudo tee -a /etc/samba/smb.conf
 echo "comment = Ubuntu File Server Share" | sudo tee -a /etc/samba/smb.conf
@@ -129,20 +145,6 @@ sudo mkdir -p /srv/samba/share
 sudo chown nobody:nogroup /srv/samba/share/
 sudo systemctl restart smbd.service
 sudo systemctl restart nmbd.service
-ibus restart
-
-printf "ibus-unikey: Require Manual Configuration ...\n"
-printf "  1.Open Text Entry from the Unity Dash\n"
-printf "  2.Click the button + to add an input source\n"
-printf "  3.Add Vietnamese(Unikey) with key 'viet' in search box\n"
-printf "  4.Set up an hot key for switching source\n"
-printf "Are you finished?\n"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) break;;
-        No ) exit;;
-    esac
-done
 
 printf "\n"
 printf "Do you want to install longman dictionary ldoce5?\n"
