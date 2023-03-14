@@ -86,15 +86,6 @@ sudo cp /etc/fstab /etc/fstab.backup
 # See more at https://askubuntu.com/questions/164926/how-to-make-partitions-mount-at-startup
 sudo blkid ...
 
-# Creates fanCleanUp
-echo "#!/bin/bash" > ~/fanCleanUp.bash
-echo "echo \"Cleaning Up\" &&" >> ~/fanCleanUp.bash
-echo "sudo apt-get -f install &&" >> ~/fanCleanUp.bash
-echo "sudo apt-get autoremove &&" >> ~/fanCleanUp.bash
-echo "sudo apt-get -y autoclean &&" >> ~/fanCleanUp.bash
-echo "sudo apt-get -y clean" >> ~/fanCleanUp.bash
-chmod +x ~/fanCleanUp.bash
-
 # INSTALL VIRTUALBOX
 # MOUNT PHYSICAL WINDOWS 10:
 # First must add user to disk group
@@ -131,6 +122,17 @@ sudo apt install gnome-startup-applications # to install it
 #    bash --login -c 'export PATH="$PATH:$HOME/.local/bin";python3 /opt/warp-cloudflare-gui/main.py --hide;disown -r;exit 0'
 # then save
 
+
+# ENABLE HIBERNATION: https://ubuntuhandbook.org/index.php/2021/08/enable-hibernate-ubuntu-21-10/
+# SecureBoot has to be turned off in bios setting
+# 1. find UUID using cat /etc/fstab |grep swap
+# 2. sudo gedit /etc/default/grub, edit: GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=xxx"
+# 3. sudo update-grub
+# 4. test it: xdg-screensaver lock && sudo systemctl hibernate
+
+# PREPARE UTILS SCRIPT
+# Creates fanCleanUp -> check the script in the repo
+# Creates rebootToWin -> check the script in the repo
 
 #IN CASE NEED to config SAMBA
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.backup
