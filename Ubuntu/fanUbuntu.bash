@@ -129,7 +129,10 @@ sudo apt install gnome-startup-applications # to install it
 # 2. sudo gedit /etc/default/grub, edit: GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=xxx"
 # 3. sudo update-grub
 # 4. test it: xdg-screensaver lock && sudo systemctl hibernate
-# 5. if ok, then make hibernate option appear at gnome power menu.
+# 5. if ok, then make hibernate option appear at GUI to use
+# 5.1 make Hibernate option appear at gnome power menu via extention: Hibernate Status Button, 
+#     but Hybrid Sleep option also appears and doesnot work as expected, and cannot be get rid of for now.
+# 5.2 make Hibernate option appear by installing fan tray icon
 
 # PREPARE UTILS SCRIPT
 # Creates fanCleanUp -> check the script in the repo
