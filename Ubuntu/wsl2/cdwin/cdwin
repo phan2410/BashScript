@@ -1,0 +1,12 @@
+#! /bin/echo This script must be sourced from within a Bourne-like shell: .
+
+KEY=$1
+[ -n "$KEY" ] && KEY=${KEY^^} || KEY="HOME"
+
+VAL=$(env | grep -E "^WIN_.*$KEY.*" | head -n 1 | sed -e 's/^.*=//')
+
+if [ -n "$VAL" ]; then
+    cd "$VAL"
+else
+    echo "Not found config for key $KEY"
+fi
