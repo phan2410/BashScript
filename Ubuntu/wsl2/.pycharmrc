@@ -1,3 +1,8 @@
+#! /bin/echo This script must be sourced from within a Bourne-like shell: .
+# Usage: in PyCharm Setting > Tools > Terminal, set Shell Path to bash.exe --rcfile .pycharmrc
+#        if bash.exe does not work, try running in powershell: wsl.exe --set-default ubuntu
+#                                or try set Shell Path to wsl.exe -d ubuntu bash --rcfile .pycharmrc
+
 source ~/.bashrc
 
 CWD_BASENAME=$(basename "$(pwd)")
