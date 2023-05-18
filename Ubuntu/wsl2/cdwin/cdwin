@@ -3,7 +3,13 @@
 KEY=$1
 [ -n "$KEY" ] && KEY=${KEY^^} || KEY="HOME"
 
-VAL=$(env | grep -E "^WIN_.*$KEY.*" | head -n 1 | sed -e 's/^.*=//')
+get_val() {
+    CDWIN_ENV_FILE="$HOME/.cdwin.env"
+    [ -f "$CDWIN_ENV_FILE" ] && { set -a; source "$CDWIN_ENV_FILE"; set +a; }
+    echo "$(env | grep -E "^WIN_.*$KEY.*" | head -n 1 | sed -e 's/^.*=//')"
+}
+
+VAL=$(get_val)
 
 if [ -n "$VAL" ]; then
     cd "$VAL"
