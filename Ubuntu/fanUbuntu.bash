@@ -94,6 +94,9 @@ sudo usermod -aG disk $USER
 # Then make some disk images
 sudo VBoxManage createmedium disk --filename "/home/fan/.virtualbox/real_win10.vmdk" --variant=RawDisk --format=VMDK --property RawDrive=/dev/sda
 sudo VBoxManage createmedium disk --filename "/home/fan/.virtualbox/real_d.vmdk" --variant=RawDisk --format=VMDK --property RawDrive=/dev/sdb
+[virtualbox 6.1 on linux mint]
+sudo VBoxManage internalcommands createrawvmdk -filename "/home/fan/.virtualbox/real_win10.vmdk" -rawdisk /dev/sda
+sudo VBoxManage internalcommands createrawvmdk -filename "/home/fan/.virtualbox/real_d.vmdk" -rawdisk /dev/sdb
 # Then create windows 10 VM and attach these storages
 
 
