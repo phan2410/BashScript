@@ -98,6 +98,9 @@ sudo VBoxManage createmedium disk --filename "/home/fan/.virtualbox/real_d.vmdk"
 sudo VBoxManage internalcommands createrawvmdk -filename "/home/fan/.virtualbox/real_win10.vmdk" -rawdisk /dev/sda
 sudo VBoxManage internalcommands createrawvmdk -filename "/home/fan/.virtualbox/real_d.vmdk" -rawdisk /dev/sdb
 # Then create windows 10 VM and attach these storages
+# To know the SATA port use
+lsblk -o NAME,HCTL
+# number in HCTL is the SATA number
 
 
 printf "Please manually install: google-chrome, ibus-unikey, dropbox, pycharm, redshift, ksnip, cloudflare-wrap, anki"
