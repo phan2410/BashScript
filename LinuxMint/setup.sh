@@ -12,3 +12,10 @@
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+# REMEMBER to do POST INSTALLATION Guide
+
+# Install Docker desktop GUI
+# https://docs.docker.com/desktop/release-notes/
+# enable: systemctl --user enable docker-desktop
+# and configure the disk image to /home/fan/.docker
+# don't Install docker-compose from apt, just use bash script or check integration in docker-desktop
