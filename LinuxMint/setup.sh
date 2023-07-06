@@ -50,12 +50,4 @@ sudo systemctl enable wol.service
 sudo systemctl start wol.service
 systemctl status wol
 
-[Cloudflare-warp]
-# if not found in software manager
-# then do as instructed athttps://pkg.cloudflareclient.com/
-curl https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ jammy main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
-sudo apt-get update && sudo apt-get install cloudflare-warp
-# need to fix warp tray icon
-
 
