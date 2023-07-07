@@ -14,11 +14,6 @@ echo \
   jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 # REMEMBER to do POST INSTALLATION Guide
 
-[Docker desktop GUI]
-# https://docs.docker.com/desktop/release-notes/
-# enable: systemctl --user enable docker-desktop
-# and configure the disk image to /home/fan/.docker
-
 [docker-compose]
 # don't Install docker-compose from apt, just use bash script or check integration in docker-desktop
 
