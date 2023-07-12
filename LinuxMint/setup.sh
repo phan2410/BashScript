@@ -23,6 +23,7 @@ $ sudo nano /etc/docker/daemon.json
 }
 # END
 $ sudo systemctl restart docker
+$ sudo rm -rf /var/lib/docker
 # docker info -f '{{ .DockerRootDir}}' should show: /tmp/new-docker-root
 
 [docker-compose]
