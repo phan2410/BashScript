@@ -29,7 +29,8 @@ $ sudo rm -rf /var/lib/docker
 [docker-compose]
 # don't Install docker-compose from apt, just use script to install
 # Read https://docs.docker.com/compose/install/standalone/
-curl -SL https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+sudo curl -SL https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+sudo chmod a+x /usr/local/bin/docker-compose
 
 
 [WAKE ON LAN]
