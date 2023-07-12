@@ -14,8 +14,19 @@ echo \
   jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 # REMEMBER to do POST INSTALLATION Guide
 
+# We can change the default root directory by updating the daemon configuration file
+$ mkdir -p /tmp/new-docker-root
+$ sudo nano /etc/docker/daemon.json
+# Paste following
+{ 
+   "data-root": "/tmp/new-docker-root"
+}
+# END
+$ sudo systemctl restart docker
+# docker info -f '{{ .DockerRootDir}}' should show: /tmp/new-docker-root
+
 [docker-compose]
-# don't Install docker-compose from apt, just use bash script or check integration in docker-desktop
+# don't Install docker-compose from apt, just use script to install
 
 
 [WAKE ON LAN]
