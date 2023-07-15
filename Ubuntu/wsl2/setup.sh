@@ -39,8 +39,27 @@ cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 # Link: https://www.dropbox.com/download?dl=packages/dropbox.py
 mv dropbox.py /usr/local/bin/dropbox
 
-# You should use dropbox cli to set autostart, and start dropboxd
-# Do not delete ~/.dropbox-dist
+# Make dropbox autostart
+sudo nano /etc/systemd/system/dropbox.service
+# root@BTVNSWDNB15:~# cat /etc/systemd/system/dropbox.service
+[Unit]
+Description=Dropbox Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/root/.dropbox-dist/dropboxd
+ExecStop=/bin/kill -HUP $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# END
+
+sudo systemctl start dropbox
+sudo systemctl enable dropbox
+sudo systemctl status dropbox
 
 # Do not execute these lines below, but just make sure that
 # sudo chown "$USER" "$HOME"
