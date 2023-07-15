@@ -37,6 +37,10 @@ cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 # Once you do, your Dropbox folder will be created in your home directory. 
 # Download this Python script to control Dropbox from the command line. For easy access, put a symlink to the script anywhere in your PATH.
 # Link: https://www.dropbox.com/download?dl=packages/dropbox.py
+mv dropbox.py /usr/local/bin/dropbox
+
+# You should use dropbox cli to set autostart, and start dropboxd
+# Do not delete ~/.dropbox-dist
 
 # Do not execute these lines below, but just make sure that
 # sudo chown "$USER" "$HOME"
