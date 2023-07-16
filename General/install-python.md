@@ -21,4 +21,13 @@ tar -xf Python-3.10.1.tgz
 cd Python-3.10.1
 ./configure --enable-optimizations
 sudo make altinstall
+
+# If failed, try removing Python-3.10.1, and execute the following ones
+# cd .. && rm -rf Python-3.10.1
+# tar -xf Python-3.10.1.tgz
+# cd Python-3.10.1
+# ./configure --enable-optimizations  -with-lto  --with-pydebug
+# make -j 6  # adjust for number of your CPU cores
+# sudo make altinstall
+
 ```
