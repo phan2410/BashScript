@@ -6,20 +6,24 @@
 source ~/.bashrc
 
 WORK_DIR=$(pwd)
+
 CWD_BASENAME=$(basename "$WORK_DIR")
 
 get_venv_dir() {
     echo "$HOME/.virtualenvs/$CWD_BASENAME"
 }
 
-VENV_DIR=$(get_venv_dir)
+VENV_DIR="$WORK_DIR/venv"
+if [ ! -d "$VENV_DIR" ]; then
+    VENV_DIR=$(get_venv_dir)
+fi
 if [ ! -d "$VENV_DIR" ]; then
     echo "Not found expected venv $VENV_DIR"
     CWD_BASENAME=""
     VENV_DIR=""
     if [ -f setup.py ]; then
-	echo "Look at setup.py"
-	CWD_BASENAME=$(grep -oP '((?<=\bsetup\(name=")|(?<=^\s{4}name="))\w+(?=",)' setup.py)
+        CWD_BASENAME=$(grep -oP '((?<=\bsetup\(name=["'"'"'])|(?<=^\s{4}name=["'"'"']))\w+(?=["'"'"'],)' setup.py)
+        echo "Read setup.py => see name=$CWD_BASENAME"
     fi
 
     [ -n "$CWD_BASENAME" ] && VENV_DIR=$(get_venv_dir) && [ -d "$VENV_DIR" ] \
@@ -28,11 +32,14 @@ fi
 
 if [ -d "$VENV_DIR" ]; then 
     source "$VENV_DIR/bin/activate"
+else
+    echo "Not found venv !!!"
 fi
 
 if [ -n "$CWD_BASENAME" ] && [ "$CWD_BASENAME" != "$(basename "$(pwd)")" ]; then
-    cdwin "$CWD_BASENAME"
+    cdw "$CWD_BASENAME"
 fi
 
+WORK_DIR=$(pwd)
 SPOOFING_WORK_DIR=${WORK_DIR/\/Dropbox\/Work/\/work}
 cd "$SPOOFING_WORK_DIR"
