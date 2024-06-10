@@ -3,6 +3,7 @@
 #        if bash.exe does not work, try running in powershell: wsl.exe --set-default ubuntu
 #                                or try set Shell Path to wsl.exe -d ubuntu bash --rcfile .pycharmrc
 
+source /etc/profile
 source ~/.bashrc
 
 WORK_DIR=$(pwd)
