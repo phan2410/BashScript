@@ -29,6 +29,7 @@ ssh -T git@github.com
 ## How to configure git gpg [Optional]
 ### Generate GPG key
 ```shell
+sudo apt install gnupg
 gpg --full-generate-key
 ```
 
