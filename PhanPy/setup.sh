@@ -19,6 +19,7 @@ ExecStartPre=/home/fan/.local/bin/ngrok update
 ExecStart=/home/fan/.local/bin/ngrok tcp 22
 User=fan
 Restart=always
+RestartSec=30s
 Type=simple
 
 [Install]
